@@ -1,4 +1,5 @@
 # -----------------------------------imports---------------------------------------------------------
+import json
 import os
 import boto3
 from flask import Flask, jsonify, request
@@ -53,7 +54,6 @@ def is_valid_region(region_name: str):
     :return: None for valid sort_by tag, error data for invalid
     """
     tmp_ec2_client = boto3.client('ec2', region_name='eu-west-1')
-    # todo: change to global? creating the set is O(n) so can do it without it
     valid_regions = set(region['RegionName'] for region in tmp_ec2_client.describe_regions()['Regions'])
     return http_error(INVALID_REGION_MESSAGE) if region_name not in valid_regions else None
 
@@ -74,7 +74,7 @@ def check_parameters_validation(region_name: str, sort_by: str, page_size: int):
     if valid_page_size: return valid_page_size
 
 
-# @cache.memoize(100)
+@cache.memoize(200)
 def get_all_ec2_instances_in_region(region_name: str, sort_by: str = None):
     """
     Get all ec2 instances in specific region
@@ -122,10 +122,11 @@ def get_request_ec2_instances():
     # find relevant indices of instances to return
     start_index = (page - 1) * page_size
     end_index = start_index + page_size
-
+    # get instances for region and paging
     instances = get_all_ec2_instances_in_region(region, sort_by)[start_index:end_index]
 
-    return jsonify(instances), {'Content-Type': 'application/json; charset=utf-8'}
+    json_data = json.dumps(instances, indent=4)
+    return json_data, {'Content-Type': 'application/json; charset=utf-8'}
 
 
 if __name__ == '__main__':
@@ -133,3 +134,4 @@ if __name__ == '__main__':
     secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
     boto3.Session(aws_access_key_id=access_key_id, aws_secret_access_key=secret_access_key)
     app.run(host='127.0.0.1', debug=True)
+    app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
