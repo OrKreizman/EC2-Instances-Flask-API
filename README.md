@@ -33,7 +33,7 @@ pip install -r requirements.txt
 
 4. Set up your AWS credentials:
 
-Make sure you have your AWS access key ID and secret access key. You can set them as environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`, or modify the `access_key_id` and `secret_access_key` variables in the `__main__` block of the `app.py` file.
+Make sure you have your AWS access key ID and secret access key. You can set them as environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`, or modify the `access_key_id` and `secret_access_key` variables in the `__main__` block of the `EC2Instances.py` file.
 
 ## Usage
 
@@ -42,7 +42,7 @@ To run the Flask API and retrieve information about EC2 instances, follow these 
 1. Start the Flask server:
 
 ```bash
-python app.py
+python EC2Instances.py
 ```
 
 2. Open your web browser and navigate to `http://127.0.0.1:5000/get_ec2_instances`.
