@@ -12,7 +12,7 @@ INVALID_SORT_BY_MESSAGE = f"Invalid sort by attribute.\nValid attributes to shor
 INVALID_PAGE_SIZE = "Invalid page size.\nPage size must be positive numbers"
 INVALID_PAGE_NUM = "Invalid page numbers."
 
-# --------------------------creating flask app----------------------------------------
+# ----------------------------------------creating flask app----------------------------------------
 app = Flask(__name__)
 app.config.from_mapping({'CACHE_TYPE': 'SimpleCache', 'CACHE_THRESHOLD': 1000})
 cache = Cache(app)
