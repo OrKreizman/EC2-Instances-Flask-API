@@ -16,7 +16,7 @@ Before running this project, make sure you have the following:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/OrKreizman/CiscoAssignment.git
+git clone https://github.com/OrKreizman/EC2-Instances-Flask-API.git
 ```
 
 2. Navigate to the project directory:
